@@ -29,3 +29,54 @@ h5,
 h6 {
   font-family: var(--font-heading), sans-serif;
 }
+
+@keyframes atlas-float {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) rotateX(0deg);
+  }
+  50% {
+    transform: translate3d(0, -12px, 0) rotateX(1deg);
+  }
+}
+
+@keyframes atlas-soft-pulse {
+  0%,
+  100% {
+    opacity: 0.55;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.85;
+    transform: scale(1.08);
+  }
+}
+
+.atlas-perspective {
+  perspective: 1200px;
+}
+
+.atlas-lift {
+  transform-style: preserve-3d;
+  transition:
+    transform 220ms ease,
+    box-shadow 220ms ease,
+    border-color 220ms ease;
+}
+
+.atlas-lift:hover {
+  transform: translateY(-8px) scale(1.015) rotateX(1.5deg);
+  box-shadow: 0 22px 55px rgb(7 20 38 / 0.18);
+}
+
+.atlas-hero-card {
+  animation: atlas-float 7s ease-in-out infinite;
+  box-shadow:
+    0 30px 80px rgb(0 0 0 / 0.28),
+    inset 0 1px 0 rgb(255 255 255 / 0.08);
+}
+
+.atlas-glow {
+  animation: atlas-soft-pulse 6s ease-in-out infinite;
+  filter: blur(10px);
+}

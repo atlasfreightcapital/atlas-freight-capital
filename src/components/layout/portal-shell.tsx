@@ -12,14 +12,15 @@ interface PortalShellProps {
   profile: SessionProfile;
   nav: NavItem[];
   title: string;
+  displayName?: string;
 }
 
-export function PortalShell({ children, profile, nav, title }: PortalShellProps) {
+export function PortalShell({ children, profile, nav, title, displayName }: PortalShellProps) {
   return (
     <div className="min-h-screen bg-[#f4f7f6] text-[#162026] lg:flex">
       <Sidebar nav={nav} title={title} />
       <div className="flex-1">
-        <Topbar profile={profile} />
+        <Topbar profile={profile} displayName={displayName} />
         <main className="p-5 lg:p-7">{children}</main>
       </div>
     </div>

@@ -3,6 +3,7 @@ import { createClient } from "@/lib/supabase/server";
 import { loadSubmissionSchema } from "@/lib/validation";
 import { uploadPrivateDocument } from "@/lib/services/storage";
 import { calculatePricing } from "@/lib/services/pricing";
+import { isUuid } from "@/lib/records";
 
 const requiredDocuments = ["rate_confirmation", "invoice", "bol_pod"];
 const optionalDocuments = ["lumper_receipt", "detention_proof", "email_approval", "other_document"];
@@ -52,25 +53,39 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: parsed.error.issues[0]?.message ?? "Invalid input" }, { status: 400 });
     }
 
-    const brokerPayload = {
-      broker_name: parsed.data.broker_name,
-      broker_mc: parsed.data.broker_mc || null,
-      email: parsed.data.broker_email,
-      phone: parsed.data.broker_phone || null,
-      address: parsed.data.broker_address || null,
-    };
+    let brokerId: string | null = null;
+    if (parsed.data.broker_id && isUuid(parsed.data.broker_id)) {
+      const { data: selectedBroker } = await supabase
+        .from("brokers")
+        .select("id")
+        .eq("id", parsed.data.broker_id)
+        .maybeSingle();
+      brokerId = selectedBroker?.id ?? null;
+    }
 
-    const { data: broker } = await supabase
-      .from("brokers")
-      .upsert(brokerPayload, { onConflict: "email" })
-      .select("id")
-      .single();
+    if (!brokerId) {
+      const brokerPayload = {
+        broker_name: parsed.data.broker_name,
+        broker_mc: parsed.data.broker_mc || null,
+        email: parsed.data.broker_email,
+        phone: parsed.data.broker_phone || null,
+        address: parsed.data.broker_address || null,
+      };
+
+      const { data: broker } = await supabase
+        .from("brokers")
+        .upsert(brokerPayload, { onConflict: "email" })
+        .select("id")
+        .single();
+
+      brokerId = broker?.id ?? null;
+    }
 
     const { data: load, error: loadError } = await supabase
       .from("load_submissions")
       .insert({
         carrier_id: carrierId,
-        broker_id: broker?.id ?? null,
+        broker_id: brokerId,
         load_number: parsed.data.load_number,
         invoice_number: parsed.data.invoice_number,
         rate_amount: parsed.data.rate_amount,

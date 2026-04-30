@@ -2,7 +2,11 @@ import Link from "next/link";
 import { Search } from "lucide-react";
 import type { SessionProfile } from "@/lib/auth";
 
-export function Topbar({ profile }: { profile: SessionProfile }) {
+export function Topbar({ profile, displayName }: { profile: SessionProfile; displayName?: string }) {
+  const isCarrier = profile.role.startsWith("carrier_");
+  const primaryLabel = displayName ?? profile.role.replaceAll("_", " ");
+  const secondaryLabel = isCarrier ? "Carrier account" : profile.fullName || profile.email;
+
   return (
     <header className="flex flex-wrap items-center justify-between gap-3 border-b border-[#d7dfdc] bg-white px-5 py-4 shadow-sm">
       <label className="flex w-full max-w-md items-center gap-2 rounded-md border border-[#c6d1cd] bg-white px-3 py-2 text-[#6c7b82]">
@@ -15,8 +19,8 @@ export function Topbar({ profile }: { profile: SessionProfile }) {
       </label>
       <div className="flex items-center gap-3">
         <div className="text-right text-xs text-[#65747b]">
-          <p className="font-semibold uppercase tracking-wider text-[#071426]">{profile.role.replaceAll("_", " ")}</p>
-          <p>{profile.fullName || profile.email}</p>
+          <p className="font-semibold uppercase tracking-wider text-[#071426]">{primaryLabel}</p>
+          <p>{secondaryLabel}</p>
         </div>
         <Link
           href="/api/auth/signout"

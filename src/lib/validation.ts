@@ -28,6 +28,7 @@ export const carrierApplicationSchema = z.object({
 });
 
 export const loadSubmissionSchema = z.object({
+  broker_id: z.string().optional(),
   broker_name: z.string().min(2),
   broker_mc: z.string().optional(),
   broker_email: z.string().email(),

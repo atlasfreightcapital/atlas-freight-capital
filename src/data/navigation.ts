@@ -29,9 +29,11 @@ export const roleHome: Record<AppRole, string> = {
 
 export const carrierNav: NavItem[] = [
   { label: "Dashboard", href: "/carrier/dashboard" },
+  { label: "Invoices", href: "/carrier/invoices" },
   { label: "Submit Load", href: "/carrier/loads/new" },
   { label: "Broker Checks", href: "/carrier/broker-checks" },
   { label: "Messages", href: "/carrier/messages" },
+  { label: "Settings", href: "/carrier/settings" },
 ];
 
 export const adminNav: NavItem[] = [

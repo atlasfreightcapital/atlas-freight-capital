@@ -15,20 +15,21 @@ import {
 } from "lucide-react";
 import { MarketingHeader } from "@/components/marketing/header";
 import { MarketingFooter } from "@/components/marketing/footer";
+import { AtlasStorySlider } from "@/components/marketing/atlas-story-slider";
 import { Button } from "@/components/ui/button";
 
 const trustBlocks = [
-  { title: "Fast funding review", body: "Clean load packages move quickly through Atlas operations.", icon: Timer },
-  { title: "Private document handling", body: "Carrier paperwork stays inside secured account workflows.", icon: ShieldCheck },
-  { title: "Broker verification", body: "Atlas helps validate broker payment risk before funding.", icon: Building2 },
-  { title: "Partner-backed capital", body: "Funding partners can review assigned files without seeing unrelated carriers.", icon: CircleDollarSign },
+  { title: "Fast funding review", body: "Complete paperwork helps Atlas review invoices quickly and keep carriers updated at each step.", icon: Timer },
+  { title: "Private document handling", body: "Rate confirmations, invoices, PODs, and compliance files stay inside secured account workflows.", icon: ShieldCheck },
+  { title: "Broker verification", body: "Atlas reviews broker details and payment information before eligible invoices move toward funding.", icon: Building2 },
+  { title: "Partner-backed capital", body: "Atlas can work with funding partners while keeping the carrier experience under the Atlas brand.", icon: CircleDollarSign },
 ];
 
 const stats = [
-  { value: "24/7", label: "portal access for approved carriers" },
-  { value: "90%", label: "example advance structure available by program" },
-  { value: "Private", label: "signed document links instead of public file URLs" },
-  { value: "RBAC", label: "carrier, Atlas, partner, and super admin controls" },
+  { value: "24/7", label: "secure portal access for approved carrier accounts" },
+  { value: "90%", label: "common advance target, subject to program approval" },
+  { value: "Private", label: "signed document access for sensitive paperwork" },
+  { value: "Clear", label: "invoice stages carriers can understand at a glance" },
 ];
 
 const steps = [
@@ -136,8 +137,10 @@ export default function Home() {
     <div className="min-h-screen overflow-hidden">
       <MarketingHeader />
       <main className="w-full">
-        <section className="w-full border-b border-[#10243d] bg-[#071426] px-4 py-16 lg:px-10 lg:py-24">
-          <div className="grid min-h-[560px] w-full gap-12 lg:grid-cols-[1.25fr_0.75fr] lg:items-center">
+        <section className="relative w-full overflow-hidden border-b border-[#10243d] bg-[#071426] px-4 py-16 lg:px-10 lg:py-24">
+          <div className="atlas-glow absolute -left-24 top-20 h-72 w-72 rounded-full bg-[#0a7c86]/30" />
+          <div className="atlas-glow absolute right-10 top-36 h-96 w-96 rounded-full bg-[#0d5c83]/25" />
+          <div className="relative grid min-h-[560px] w-full gap-12 lg:grid-cols-[1.25fr_0.75fr] lg:items-center">
             <div className="max-w-5xl">
               <p className="text-sm uppercase tracking-[0.28em] text-[#65d8e1]">Atlas Freight Capital</p>
               <h1 className="mt-5 max-w-5xl text-5xl font-semibold leading-tight text-white lg:text-7xl">
@@ -166,12 +169,12 @@ export default function Home() {
                 ))}
               </div>
             </div>
-            <div className="grid gap-4 rounded-lg border border-[#1e3552] bg-[#0d1b2f] p-6">
+            <div className="atlas-hero-card atlas-perspective grid gap-4 rounded-2xl border border-[#1e3552] bg-[#0d1b2f]/95 p-6">
               <p className="text-sm font-semibold uppercase tracking-[0.2em] text-[#c7d4df]">Trust signals</p>
               {trustBlocks.map(({ title, body, icon: Icon }) => (
                 <div
                   key={title}
-                  className="flex items-start gap-4 rounded-lg border border-[#1e3552] bg-[#071426] p-5"
+                  className="atlas-lift flex items-start gap-4 rounded-xl border border-[#1e3552] bg-[#071426] p-5"
                 >
                   <Icon className="mt-1 h-5 w-5 text-[#65d8e1]" />
                   <div>
@@ -183,6 +186,8 @@ export default function Home() {
             </div>
           </div>
         </section>
+
+        <AtlasStorySlider />
 
         <section className="w-full border-b border-[#d7dfdc] bg-white px-4 py-16 lg:px-10">
           <div className="grid gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:items-start">
@@ -196,7 +201,7 @@ export default function Home() {
             </div>
             <div className="grid gap-5 md:grid-cols-2">
               {programFit.map((item) => (
-                <div key={item.title} className="rounded-lg border border-[#d1dad6] bg-[#fbfcfa] p-7">
+                <div key={item.title} className="atlas-lift rounded-xl border border-[#d1dad6] bg-[#fbfcfa] p-7">
                   <h3 className="text-2xl font-semibold text-[#071426]">{item.title}</h3>
                   <p className="mt-3 text-base leading-7 text-[#40515a]">{item.body}</p>
                 </div>
@@ -219,7 +224,7 @@ export default function Home() {
               <Link
                 key={title}
                 href={href}
-                className="rounded-lg border border-[#d1dad6] bg-white p-8 shadow-sm transition hover:border-[#0a7c86]"
+                className="atlas-lift rounded-xl border border-[#d1dad6] bg-white p-8 shadow-sm transition hover:border-[#0a7c86]"
               >
                 <Icon className="h-7 w-7 text-[#0a7c86]" />
                 <h2 className="mt-5 text-2xl font-semibold text-[#071426]">{title}</h2>
@@ -240,7 +245,7 @@ export default function Home() {
           </div>
           <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
             {platformCapabilities.map(({ title, body, icon: Icon }) => (
-              <div key={title} className="rounded-lg border border-[#d1dad6] bg-[#fbfcfa] p-7">
+              <div key={title} className="atlas-lift rounded-xl border border-[#d1dad6] bg-[#fbfcfa] p-7">
                 <Icon className="h-7 w-7 text-[#0a7c86]" />
                 <h3 className="mt-5 text-2xl font-semibold text-[#071426]">{title}</h3>
                 <p className="mt-3 text-base leading-7 text-[#40515a]">{body}</p>
@@ -250,7 +255,7 @@ export default function Home() {
         </section>
 
         <section className="grid w-full gap-8 px-4 py-16 lg:grid-cols-[1.1fr_0.9fr] lg:px-10">
-          <div className="rounded-lg border border-[#d1dad6] bg-white p-8 shadow-sm">
+          <div className="atlas-lift rounded-xl border border-[#d1dad6] bg-white p-8 shadow-sm">
             <p className="text-sm font-semibold uppercase tracking-wide text-[#0a7c86]">How it works</p>
             <h2 className="mt-3 text-4xl font-semibold text-[#071426]">From application to funded invoice.</h2>
             <ol className="mt-8 grid gap-5">
@@ -267,7 +272,7 @@ export default function Home() {
               ))}
             </ol>
           </div>
-          <div className="rounded-lg border border-[#10243d] bg-[#071426] p-8 shadow-sm">
+          <div className="atlas-lift rounded-xl border border-[#10243d] bg-[#071426] p-8 shadow-sm">
             <p className="text-sm font-semibold uppercase tracking-wide text-[#65d8e1]">Carrier benefits</p>
             <h2 className="mt-3 text-4xl font-semibold text-white">Built for carriers who need clarity.</h2>
             <ul className="mt-8 grid gap-5">
@@ -300,7 +305,7 @@ export default function Home() {
                 "Dispute, chargeback, and blocked broker controls",
                 "Verification email status and manual review notes",
               ].map((item) => (
-                <div key={item} className="rounded-lg border border-[#1e3552] bg-[#0d1b2f] p-5 text-base text-[#eef5f8]">
+                  <div key={item} className="atlas-lift rounded-xl border border-[#1e3552] bg-[#0d1b2f] p-5 text-base text-[#eef5f8]">
                   {item}
                 </div>
               ))}
@@ -320,7 +325,7 @@ export default function Home() {
             </div>
             <div className="grid gap-4 md:grid-cols-2">
               {complianceItems.map((item) => (
-                <div key={item} className="rounded-lg border border-[#d1dad6] bg-white p-5 text-base leading-7 text-[#1d2a30] shadow-sm">
+                <div key={item} className="atlas-lift rounded-xl border border-[#d1dad6] bg-white p-5 text-base leading-7 text-[#1d2a30] shadow-sm">
                   {item}
                 </div>
               ))}
